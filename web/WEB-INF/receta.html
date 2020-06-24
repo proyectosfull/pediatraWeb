@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		* {
+			font-size: 12pt;
+		}
+		.center {
+			text-align: center;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		td, th {
+			padding: 4px 8px;
+		}
+		table.bordered th, table.bordered td {
+		  border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td width="100%"><h3 class="center">Dr. {{pediatra}}</h3></td>
+		</tr>
+		<tr>
+			<td class="center"><b>PEDIATRA</b></td>
+		</tr>
+		<tr>
+			<td class="center"><b>{{lugar_estudios}}</b></td>
+		</tr>
+		<tr>
+			<td class="center"><b>CED. PROF. {{cedula_profesional}}</b></td>
+		</tr>
+		<tr>
+			<td class="center"><b>CED. ESP. {{cecula_especialidad}}</b></td>
+		</tr>
+		<tr>
+			<td class="center" style="font-size: 11pt; font-weight: bold">Certificado No {{cmcp}} del Consejo Mexicano de Certificación en Pediatría A.C</td>
+		</tr>
+	</table>
+	<div style="padding-top: 40px"></div>
+	<main>
+		
+		<table>
+			<tr>
+				<td width="70%"><b>Nombre:</b> {{paciente}}</td>
+				<td width="30%"><b>Fecha:</b> {{fecha}}</td>
+			</tr>
+		</table>
+
+		<table>
+			<tr>
+				<td width="50%"><b>Peso:</b> {{peso}}</td>
+				<td width="50%"><b>Temperatura:</b> {{temperatura}}</td>
+			</tr>
+		</table>
+		<div style="padding-top: 20px"></div>
+		<table>
+			<tr>
+				<td width="100%"><b>Observación:</b></td>
+			</tr>
+			<tr>
+				<td>{{notas_pediatra}}</td>
+			</tr>
+		</table>
+		<div style="padding-top: 40px"></div>
+
+
+
+		<table>
+			<thead>
+				<tr>
+					<th width="46%">Medicamento</th>
+					<th width="18%">Dósis</th>
+					<th width="18%">Duración</th>
+					<th width="18%">Intervalo</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{medicamentos}}
+			</tbody>
+		</table>
+	</main>
+</body>
+</html>
