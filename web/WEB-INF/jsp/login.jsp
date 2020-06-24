@@ -63,7 +63,7 @@
 
                         <div class="container-login100-form-btn p-t-10">
                             <button type="submit"  class="login100-form-btn">
-                                Inciar sesion
+                                Iniciar sesión
                             </button>
                         </div>
 

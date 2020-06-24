@@ -130,7 +130,7 @@ public class Multimedia {
     public String createFile(final FileBase64 fileData) {
         String fileName;
         try {
-            byte[] fileByteArray = org.apache.tomcat.util.codec.binary.Base64.decodeBase64(fileData.getData());
+            byte[] fileByteArray = java.util.Base64.getDecoder().decode(fileData.getData());
             
             fileName = fileData.getName() + "__" + String.valueOf(System.currentTimeMillis());
             
