@@ -54,7 +54,7 @@ public class AdministradorDao extends Dao {
         List<Pediatra> lista = new ArrayList();
         try {
             openConnection();
-            String query = "SELECT ped.fechaRegistro, ped.cedula_especialidad,ped.cmcp,ped.lugar_estudios,ped.aprobado, ped.idpediatra, ped.nombre, ped.apellidos, ped.cedula_profesional, ped.disponibilidad, ped.tarifa, ped.fotografia,\n"
+            String query = "SELECT ped.correo, ped.fechaRegistro, ped.cedula_especialidad,ped.cmcp,ped.lugar_estudios,ped.aprobado, ped.idpediatra, ped.nombre, ped.apellidos, ped.cedula_profesional, ped.disponibilidad, ped.tarifa, ped.fotografia,\n"
                     + "esp.idespecialidad, esp.nombre AS especialidad, ub.idLugarAtencion, ub.latitud, ub.longitud, ub.direccion, t_ub.nombre AS tipo\n"
                     + "FROM pediatra ped\n"
                     + "JOIN especialidad esp ON ped.especialidad_id = esp.idespecialidad\n"
@@ -65,6 +65,7 @@ public class AdministradorDao extends Dao {
             while (RS.next()) {
               
                 Pediatra pediatra = new Pediatra();
+                pediatra.setCorreo(RS.getString("correo"));
                 pediatra.setCedulaEspecialidad(RS.getString("cedula_especialidad"));
                 pediatra.setCmcp(RS.getString("cmcp"));
                 pediatra.setLugarEstudios(RS.getString("lugar_estudios"));

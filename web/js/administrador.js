@@ -225,6 +225,7 @@ console.log(response);
             for (var i = 0; i < response.data.length; i++) {
                 var status = response.data[i].aprobado;
                 var sta = "Alta";
+                var email = response.data[i].correo;
                 let IDe = response.data[i].id;
                 var apro = '<span class="custom-badge status-red">Aprobar</span>';
                 if (status) {
@@ -236,6 +237,7 @@ console.log(response);
 
                 $('.pediatras').append(`<div class="col-md-4 col-sm-4  col-lg-3">
                         <div class="profile-widget">
+                            <script src="https://smtpjs.com/v3/smtp.js"></script>  
                             <div class="doctor-img">
                                 <a class="avatar" ><img alt="" src="images/login.png"></a>
                             </div>
@@ -246,7 +248,7 @@ console.log(response);
                             <div class="doc-prof">Lugar de estudios: ${response.data[i].lugarEstudios}</div>
                             <div class="doc-prof">Fecha de Registro: ${response.data[i].fecRegistro}</div>
             
-                            <div class="doc-prof"> <a id="${IDe}" onclick="alta(this.id)" >${apro}<a></div>
+                            <div class="doc-prof"> <a id="${IDe}" onclick="alta(this.id, ${email})" >${apro}<a></div>
                             <div class="user-country">
                                 <i class="fa fa-map-marker"></i>${response.data[i].lugarAtencion.direccion}
                             </div>
@@ -341,7 +343,8 @@ function getDetallesById(id) {
         }
     });
 }
-function  alta(val) {
+
+function  alta(val, email) {
     $.ajax({
         url: `api/administrador/updatePediatra/${val}`,
         type: 'POST',
@@ -352,11 +355,29 @@ function  alta(val) {
         if (data.data) {
             alert("Se aprobo el pediatra correctamente");
             location.reload();
+
+            // Send email
+
+            Email.send({
+                Host: "mail.revoktek.com",
+                Username: "ycuenca@revoktek.com",
+                Password: "bm##%]H$biXm",
+                To: [{email}],
+                From: "ycuenca@revoktek.com",
+                Subject: "Pedriatia Innovadora",
+                Body: "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n\
+                        A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación. \n\n\
+                        Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com \n\n\
+                        1)Identificación oficial (archivo PDF)\n\n\
+                        2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria.",
+            }).then(
+                    message => alert("su correo fue enviado con exito")
+            );
+
         } else {
             alert(data.mensaje);
         }
     });
-
 }
 
 function multiplicarInputs(text) {
@@ -385,4 +406,3 @@ JSON.from = function toJson(form) { //Transformar form a json
     }
     return data;
 };
-  
