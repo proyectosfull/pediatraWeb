@@ -360,8 +360,8 @@ function  alta(val, email) {
 
             Email.send({
                 Host: "mail.revoktek.com",
-                Username: "ycuenca@revoktek.com",
-                Password: "bm##%]H$biXm",
+                Username: "contacto-medicos@pediatria-innovadora.com",
+                Password: "Mail.2020ppda",
                 To: [{email}],
                 From: "ycuenca@revoktek.com",
                 Subject: "Pedriatia Innovadora",

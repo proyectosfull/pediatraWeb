@@ -324,6 +324,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.slimscroll.js"></script>
         <script src="js/administrador.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
        
         <script src="js/app.js"></script>
     </body>
