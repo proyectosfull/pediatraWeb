@@ -343,44 +343,41 @@ function getDetallesById(id) {
 function sendEmail(val, mail) {
 
     $("head").append('<script type="text/javascript" src="https://smtpjs.com/v3/smtp.js"></script>');
+    $.ajax({
+        url: `api/administrador/updatePediatra/${val}`,
+        type: 'POST',
+        dataType: 'json',
+        cache: false
+    }).done(function (data) {
 
-//    $.ajax({
-//        url: `api/administrador/updatePediatra/${val}`,
-//        type: 'POST',
-//        dataType: 'json',
-//        cache: false
-//    }).done(function (data) {
-//
-//        if (data.data) {
-//            alert("Se aprobo el pediatra correctamente");
-//            location.reload();
-//
+        if (data.data) {
+            alert("Se aprobo el pediatra correctamente");
 
 
 
-//        Body: "
+            let body = "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n" +
+                    "A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación." +
+                    "Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com" +
+                    "1)Identificación oficial (archivo PDF)" +
+                    "2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria."
 
-let body = "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n" +
-                        "A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación." +
-                        "Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com" +
-                        "1)Identificación oficial (archivo PDF)" +
-                        "2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria."
+            Email.send({
+                Host: "smtp.elasticemail.com",
+                Username: "yadsirycuenca@gmail.com",
+                Password: "872E90BF0E98A6404D41F2645CF0CC730ACA",
+                //Port: 2525,
+                To: `${mail}`,
+                From: "yadsirycuenca@gmail.com",
+                Body: body,
+                Subject: "EnHorabuena Pediatra, su registro ha sido exitoso en nuestra plataforma de pediatras innovadora."
 
-    Email.send({
-        Host: "smtp.elasticemail.com",
-        Username: "yadsirycuenca@gmail.com",
-        Password: "872E90BF0E98A6404D41F2645CF0CC730ACA",
-        //Port: 2525,
-        To: `${mail}`,
-        From: "yadsirycuenca@gmail.com",
-        Body: body,
-        Subject: "EnHorabuena Pediatra, su registro ha sido exitoso en nuestra plataforma de pediatras innovadora."
+            }).then(
+                    message => alert("mail sent successfully")
+            );
 
-    }).then(
-            message => alert("mail sent successfully")
-    );
-
-    console.log(body);
+            location.reload();
+        }
+    });
 }
 
 // Other function
