@@ -62,22 +62,8 @@ public class AdministradorService {
         return new Gson().toJson(response);
     }
 
-    @POST
-    @Path("/getPediatras")
-    public String getPediatras() throws JSONException {
-        Administrador admin = (Administrador) request.getSession(false).getAttribute("logged");
-        System.out.println(admin);
-        if (admin != null) {
-
-            // PediatraDao Dao = new PediatraDao();
-            response.put("data", dao.obtenerLista());
-        } else {
-            response.put("data", false);
-            response.put("mensaje", "Aun no ha iniciado session");
-        }
-        return new Gson().toJson(response);
-    }
-
+    
+    
     @POST
     @Path("/updatePediatra/{id}")
     public String updatePediatra(@PathParam("id") int id) throws JSONException, SQLException {
@@ -89,6 +75,22 @@ public class AdministradorService {
             response.put("data", dao.updatePediatra(id));
         } else {
             response.put("OK", false);
+            response.put("mensaje", "Aun no ha iniciado session");
+        }
+        return new Gson().toJson(response);
+    }
+    
+    @POST
+    @Path("/getPediatras")
+    public String getPediatras() throws JSONException, SQLException {
+        Administrador admin = (Administrador) request.getSession(false).getAttribute("logged");
+        System.out.println(admin);
+        if (admin != null) {
+
+            // PediatraDao Dao = new PediatraDao();
+            response.put("data", dao.obtenerLista());
+        } else {
+            response.put("data", false);
             response.put("mensaje", "Aun no ha iniciado session");
         }
         return new Gson().toJson(response);
@@ -243,7 +245,4 @@ public class AdministradorService {
         response.put("OK", true);
         return new Gson().toJson(response);
     }
-    
-    
-    
 }

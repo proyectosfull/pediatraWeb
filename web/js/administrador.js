@@ -4,9 +4,9 @@ $(document).ready(function () {
     $("#fecRegistrou").val(now.toLocaleString());
     getpediatras();
     getrecetas();
-$(".recargar").click(function (){
+    $(".recargar").click(function () {
         location.reload();
-});
+    });
     $('#re-receta').on('submit', function (e) {
         e.preventDefault();
         let form = $(this);
@@ -24,7 +24,7 @@ $(".recargar").click(function (){
                 intervalo: tbody.children[i].children[3].innerHTML
             });
         }
-     
+
         $.ajax({
             url: 'api/administrador/receta',
             type: 'PUT',
@@ -218,26 +218,26 @@ function  getpediatras() {
         contentType: 'application/json'
     }).done(function (response) {
 
-console.log(response);
+        console.log(response);
         if (response.data != null) {
-            
-            
+
+
             for (var i = 0; i < response.data.length; i++) {
                 var status = response.data[i].aprobado;
                 var sta = "Alta";
-                var email = response.data[i].correo;
                 let IDe = response.data[i].id;
+                var email = `${response.data[i].correo}`;
+
+
                 var apro = '<span class="custom-badge status-red">Aprobar</span>';
+
                 if (status) {
                     sta = "Baja";
                     apro = '<span class="custom-badge status-green">Aprobado</span>';
                 }
 
-
-
                 $('.pediatras').append(`<div class="col-md-4 col-sm-4  col-lg-3">
                         <div class="profile-widget">
-                            <script src="https://smtpjs.com/v3/smtp.js"></script>  
                             <div class="doctor-img">
                                 <a class="avatar" ><img alt="" src="images/login.png"></a>
                             </div>
@@ -248,22 +248,18 @@ console.log(response);
                             <div class="doc-prof">Lugar de estudios: ${response.data[i].lugarEstudios}</div>
                             <div class="doc-prof">Fecha de Registro: ${response.data[i].fecRegistro}</div>
             
-                            <div class="doc-prof"> <a id="${IDe}" onclick="alta(this.id, ${email})" >${apro}<a></div>
+                            <div class="doc-prof"> <button style="background: transparent; border: none;" type="submit" id="${IDe}" onclick="sendEmail(this.id, '${email}')" >${apro}</button></div>
                             <div class="user-country">
                                 <i class="fa fa-map-marker"></i>${response.data[i].lugarAtencion.direccion}
                             </div>
                         </div>
-                    </div>`)
-
+                    </div>`);
             }
             $("#load").hide(350);
         } else {
             alert("No hay Pediatras que mostrar");
         }
-
     });
-
-
 
 }
 function getDatosById(id) {
@@ -323,7 +319,7 @@ function getDetallesById(id) {
         dataType: 'json',
         cache: false
     }).done(function (data) {
-        
+
 //        $("#medicamentou").val(data.data[0].medicamento);
 //        $("#dosisu").val(data.data[0].dosis);
 //        $("#duracionu").val(data.data[0].duracion);
@@ -344,42 +340,50 @@ function getDetallesById(id) {
     });
 }
 
-function  alta(val, email) {
-    $.ajax({
-        url: `api/administrador/updatePediatra/${val}`,
-        type: 'POST',
-        dataType: 'json',
-        cache: false
-    }).done(function (data) {
+function sendEmail(val, mail) {
 
-        if (data.data) {
-            alert("Se aprobo el pediatra correctamente");
-            location.reload();
+    $("head").append('<script type="text/javascript" src="https://smtpjs.com/v3/smtp.js"></script>');
 
-            // Send email
+//    $.ajax({
+//        url: `api/administrador/updatePediatra/${val}`,
+//        type: 'POST',
+//        dataType: 'json',
+//        cache: false
+//    }).done(function (data) {
+//
+//        if (data.data) {
+//            alert("Se aprobo el pediatra correctamente");
+//            location.reload();
+//
 
-            Email.send({
-                Host: "mail.revoktek.com",
-                Username: "contacto-medicos@pediatria-innovadora.com",
-                Password: "Mail.2020ppda",
-                To: [{email}],
-                From: "ycuenca@revoktek.com",
-                Subject: "Pedriatia Innovadora",
-                Body: "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n\
-                        A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación. \n\n\
-                        Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com \n\n\
-                        1)Identificación oficial (archivo PDF)\n\n\
-                        2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria.",
-            }).then(
-                    message => alert("su correo fue enviado con exito")
-            );
 
-        } else {
-            alert(data.mensaje);
-        }
-    });
+
+//        Body: "
+
+let body = "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n" +
+                        "A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación." +
+                        "Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com" +
+                        "1)Identificación oficial (archivo PDF)" +
+                        "2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria."
+
+    Email.send({
+        Host: "smtp.elasticemail.com",
+        Username: "yadsirycuenca@gmail.com",
+        Password: "872E90BF0E98A6404D41F2645CF0CC730ACA",
+        //Port: 2525,
+        To: `${mail}`,
+        From: "yadsirycuenca@gmail.com",
+        Body: body,
+        Subject: "EnHorabuena Pediatra, su registro ha sido exitoso en nuestra plataforma de pediatras innovadora."
+
+    }).then(
+            message => alert("mail sent successfully")
+    );
+
+    console.log(body);
 }
 
+// Other function
 function multiplicarInputs(text) {
     var num = text.value
     var div = '';
@@ -405,4 +409,5 @@ JSON.from = function toJson(form) { //Transformar form a json
         }
     }
     return data;
-};
+}
+    

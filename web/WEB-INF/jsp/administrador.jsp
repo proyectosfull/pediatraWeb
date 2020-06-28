@@ -95,7 +95,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="see-all">
-                                        <a class="see-all-btn" id="load">Cargando..........</a>
+                                        <a class="see-all-btn" id="load">Cargando...</a>
                                     </div>
                                 </div>
                             </div>
