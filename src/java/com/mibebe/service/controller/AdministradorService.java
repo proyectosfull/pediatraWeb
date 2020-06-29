@@ -9,6 +9,9 @@ import com.mibebe.dao.RecetaDao;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -65,14 +68,20 @@ public class AdministradorService {
     
     
     @POST
-    @Path("/updatePediatra/{id}")
-    public String updatePediatra(@PathParam("id") int id) throws JSONException, SQLException {
+    @Path("/updatePediatra/{id}/{email}")
+    public String updatePediatra(@PathParam("id") int id, @PathParam("email") String email) throws JSONException, SQLException {
         Administrador admin = (Administrador) request.getSession(false).getAttribute("logged");
         System.out.println(admin);
         if (admin != null) {
-
-            // PediatraDao Dao = new PediatraDao();
             response.put("data", dao.updatePediatra(id));
+            
+            HtmlEmailSender htmlEmailSender = new HtmlEmailSender();
+            try {
+                htmlEmailSender.sendHtmlEmail(email);
+            } catch (AddressException ex) {
+                Logger.getLogger(AdministradorService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } else {
             response.put("OK", false);
             response.put("mensaje", "Aun no ha iniciado session");

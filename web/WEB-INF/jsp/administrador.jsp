@@ -27,7 +27,7 @@
             <div class="header">
                 <div class="header-left">
                     <a href="index-2.html" class="logo">
-                        <img src="img/logo.png" width="35" height="35" alt=""> <span>Pediatra Innovadora</span>
+                        <img src="img/logo.png" width="35" height="35" alt=""> <span>Pediatría Innovadora</span>
                     </a>
                 </div>
                 <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>

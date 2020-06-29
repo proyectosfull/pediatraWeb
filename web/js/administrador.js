@@ -218,6 +218,8 @@ function  getpediatras() {
         contentType: 'application/json'
     }).done(function (response) {
 
+        //sendEmail(25, 'yadsirycuenca@gmail.com');
+
         console.log(response);
         if (response.data != null) {
 
@@ -259,6 +261,7 @@ function  getpediatras() {
         } else {
             alert("No hay Pediatras que mostrar");
         }
+
     });
 
 }
@@ -341,10 +344,8 @@ function getDetallesById(id) {
 }
 
 function sendEmail(val, mail) {
-
-    $("head").append('<script type="text/javascript" src="https://smtpjs.com/v3/smtp.js"></script>');
     $.ajax({
-        url: `api/administrador/updatePediatra/${val}`,
+        url: `api/administrador/updatePediatra/${val}/${mail}`,
         type: 'POST',
         dataType: 'json',
         cache: false
@@ -352,32 +353,9 @@ function sendEmail(val, mail) {
 
         if (data.data) {
             alert("Se aprobo el pediatra correctamente");
-
-
-
-            let body = "Bienvenido al panel de médicos pediatras, que ofrecen sus servicios de consulta NO DE URGENCIA o considerada para resolver un estado de gravedad, si no más bien como ayuda y orientación de las primeras medidas para llevarse a cabo en las enfermedades comunes de los niños. \n\n" +
-                    "A través de este medio, también se podrá llevar el CONTROL RUTINARIO DEL NIÑO SANO, así como proporcionar a los padres, la orientación suficiente para completar su esquema habitual de vacunación." +
-                    "Para poder realizar el depósito correspondiente de la consulta realizada, solicitamos nos envié la siguiente información al correo pediatriainnovadora@gmail.com" +
-                    "1)Identificación oficial (archivo PDF)" +
-                    "2)Carátula del estado de cuenta bancaria (archivo PDF) donde se muestre la CLABE Interbancaria."
-
-            Email.send({
-                Host: "smtp.elasticemail.com",
-                Username: "yadsirycuenca@gmail.com",
-                Password: "872E90BF0E98A6404D41F2645CF0CC730ACA",
-                //Port: 2525,
-                To: `${mail}`,
-                From: "yadsirycuenca@gmail.com",
-                Body: body,
-                Subject: "EnHorabuena Pediatra, su registro ha sido exitoso en nuestra plataforma de pediatras innovadora."
-
-            }).then(
-                    message => alert("mail sent successfully")
-            );
-
-            location.reload();
         }
-    });
+    }
+    );
 }
 
 // Other function
