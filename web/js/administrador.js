@@ -353,6 +353,7 @@ function sendEmail(val, mail) {
 
         if (data.data) {
             alert("Se aprobo el pediatra correctamente");
+            location.reaload();
         }
     }
     );

@@ -59,7 +59,7 @@ public class AdministradorDao extends Dao {
                     + "FROM pediatra ped\n"
                     + "JOIN especialidad esp ON ped.especialidad_id = esp.idespecialidad\n"
                     + "JOIN lugar_atencion ub ON ped.lugar_atencion_id = ub.idLugarAtencion\n"
-                    + "JOIN tipo_lugar_atencion t_ub ON ub.tipo_lugar_atencion_id = t_ub.idLugar and ped.aprobado=0;";
+                    + "JOIN tipo_lugar_atencion t_ub ON ub.tipo_lugar_atencion_id = t_ub.idLugar;";
             PSTM = CONNECTION.prepareStatement(query);
             RS = PSTM.executeQuery();
             while (RS.next()) {
