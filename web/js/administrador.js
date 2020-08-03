@@ -34,7 +34,6 @@ $(document).ready(function () {
             contentType: 'application/json'
         }).done(function (response) {
             if (response.data) {
-                // window.location.replace(context + "/administrador");
                 alert("Receta registrada correctamente");
                 location.reload();
             } else {
@@ -175,33 +174,25 @@ function getrecetas() {
         cache: false,
         contentType: 'application/json'
     }).done(function (response) {
-//        console.log(response.data);
         if (response.data != null) {
             for (var i = 0; i < response.data.length; i++) {
-//                if (response.data[i].id==response.data[i].detalles[i].receta_id) {
-//                    console.log( "Enfermedad " + response.data[i].nombre +   " Medicamento " + response.data[i].detalles[i].medicamento);
-//                }
-//                
 
                 $('#recetas-cre').append(`<tr>
-                                               <td style="min-width: 200px;">
-                                                                    <a class="avatar" >Recetas</a>
-                                                                    <h2><a >${response.data[i].nombre}<span>${response.data[i].fecRegistro}</span></a></h2>
-                                                                </td>                 
-                                                                <td>
-                                                                    <h4 class="time-title p-0">Detalles</h4>
-                                                                    <p><strong>Medicamento</strong>: ${response.data[i].detalles[i].medicamento}</p>
-                                                                    <p><strong>Dosis</strong>: ${response.data[i].detalles[i].dosis}</p>
-                                                                </td>
-                                                                <td>
-                                                                     <p><strong>Duracion</strong>: ${response.data[i].detalles[i].duracion}</p>
-                                                                    <p><strong>Intervalo</strong>: ${response.data[i].detalles[i].intervalo}</p>
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    <a  class="btn btn-outline-primary take-btn actualizar" id="${response.data[i].id}">Actualizar</a><br><br>
-                                                               <a  class="btn btn-outline-danger take-btn eliminar" id="${response.data[i].id}">eliminar</a>
-                                                                </td>
-                                                            </tr>`);
+                                              
+                <td>
+                <h4 class="time-title p-0">Detalles</h4>
+                <p><strong>Medicamento</strong>: ${response.data[i].detalles[i].medicamento}</p>
+                <p><strong>Dosis</strong>: ${response.data[i].detalles[i].dosis}</p>
+                </td>
+                <td>
+                <p><strong>Duracion</strong>: ${response.data[i].detalles[i].duracion}</p>
+                <p><strong>Intervalo</strong>: ${response.data[i].detalles[i].intervalo}</p>
+                </td>
+                <td class="text-right">
+                <a  class="btn btn-outline-primary take-btn actualizar" id="${response.data[i].id}">Actualizar</a><br><br>
+                <a  class="btn btn-outline-danger take-btn eliminar" id="${response.data[i].id}">eliminar</a>
+                </td>
+                </tr>`);
             }
         }
 
@@ -251,9 +242,7 @@ function  getpediatras() {
                             <div class="doc-prof">Fecha de Registro: ${response.data[i].fecRegistro}</div>
             
                             <div class="doc-prof"> <button style="background: transparent; border: none;" type="submit" id="${IDe}" onclick="sendEmail(this.id, '${email}')" >${apro}</button></div>
-                            <div class="user-country">
-                                <i class="fa fa-map-marker"></i>${response.data[i].lugarAtencion.direccion}
-                            </div>
+                            
                         </div>
                     </div>`);
             }
@@ -261,9 +250,10 @@ function  getpediatras() {
         } else {
             alert("No hay Pediatras que mostrar");
         }
-
     });
-
+//<div class="user-country">
+    //                              <i class="fa fa-map-marker"></i>${response.data[i].lugarAtencion.direccion}
+    //                        </div>
 }
 function getDatosById(id) {
     $.ajax({

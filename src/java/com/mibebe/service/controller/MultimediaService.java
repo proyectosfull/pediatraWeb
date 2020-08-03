@@ -130,24 +130,27 @@ public class MultimediaService {
         mediaToken.setExp(exp);
         
         if( !Multimedia.assertToken(mediaToken) ) {
-             return Response.status(Response.Status.UNAUTHORIZED).entity(Multimedia.getErrorMessage()).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity(Multimedia.getErrorMessage()).build();
+            
         }
         
         Multimedia multimedia = new Multimedia(ctx);
         multimedia.setPath(path);
+        System.out.println("multimedia.setPath(path); " + path);
         File file = multimedia.getFile(fileName);
+        System.out.println("File file = multimedia.getFile(fileName);" + fileName);
         
         if(file == null) {
+            System.out.println("FILE = NULL");
             return Response.status(Response.Status.NOT_FOUND).build();
         }            
         
-        String contentType = Files.probeContentType(file.toPath());//MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
-        System.out.println(contentType);
+        String contentType = Files.probeContentType(file.toPath());
+        MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
+        System.out.println("Response" + file);
         return Response.ok(file).type(contentType)
                 .header("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0")
                 .header("Content-Disposition", "inline; filename=\"".concat(fileName).concat("\""))
                 .build();
-    }
-    
-    
+    }   
 }

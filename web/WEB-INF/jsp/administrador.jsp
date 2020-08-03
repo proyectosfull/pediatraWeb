@@ -66,9 +66,9 @@
                             <li>
                                 <a id="altaD"><i class="fa fa-user-md"></i> <span>Pediatras</span></a>
                             </li>
-                            <li>
+                            <!--<li>
                                 <a id="recetas"><i class="fa fa-hospital-o"></i> <span>Recetas</span></a>
-                            </li>
+                            </li> -->
 
                         </ul>
                     </div>

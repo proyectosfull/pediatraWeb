@@ -60,7 +60,7 @@ public class Multimedia {
                 helper = bodyParts.get(i).getContentDisposition().getFileName().split("\\.");
                 fileName = helper[0] + "__" + String.valueOf(System.nanoTime()) + "." +  helper[1];
 
-                Files.copy(bodyPartEntity.getInputStream(), Paths.get(path.concat("/").concat(fileName)));
+                Files.copy(bodyPartEntity.getInputStream(), Paths.get(path.concat("\\").concat(fileName)));
                 bodyPartEntity.close();
                 nombreArchivos.add(fileName);
             } catch (IOException e) {
@@ -78,7 +78,7 @@ public class Multimedia {
 
             StringBuilder builder = new StringBuilder();
             String fullPath = builder.append(path)
-                    .append("/")
+                    .append("\\")
                     .append(fileName)
                     .append(".")
                     .append(extension)
@@ -118,8 +118,8 @@ public class Multimedia {
     }
 
     public File getFile(String fileName) {
-        String path = this.path.concat("/").concat(fileName);
-        System.out.println(path);
+        String path = this.path.concat("\\").concat(fileName);
+        System.err.println("PATH: " + path);
         File file = new File(path);
         if (!file.exists()) {
             return null;
@@ -136,7 +136,7 @@ public class Multimedia {
             
             String fullPath = new StringBuilder()
                     .append(path)
-                    .append("/")
+                    .append("\\")
                     .append(fileName)
                     .append(".")
                     .append(fileData.getExtension())
@@ -145,7 +145,10 @@ public class Multimedia {
             try (FileOutputStream out = new FileOutputStream(fullPath)) {
                 out.write(fileByteArray);
                 out.flush();
+                System.out.println("DOCUMENTO CREADO CORRECTAMENTE");
             }
+            System.err.println("FullPath: " + fullPath);
+            System.err.println("Return: " + fileName + "." + fileData.getExtension());
             return fileName + "." + fileData.getExtension();
         } catch (IOException e) {
             AppLog.Log(TAG, "Error al intentar crear archivo", e);
@@ -200,11 +203,4 @@ public class Multimedia {
         }
         return result;
     }
-    
-    /*public static void main(String... arg) {
-        MediaToken mediaToken = new MediaToken();
-        mediaToken.setExp(1560401185203L);
-        mediaToken.setToken("XuxfsNfmCB2DltwVXjOcUoLAhEWqv6yrG1sEVRf9+5rRM1/EtWZ02PtjXT8RBkFMIgbFYCQ8yy9HKR37Uct3ag");
-        System.out.println(assertToken(mediaToken));
-    }*/
 }

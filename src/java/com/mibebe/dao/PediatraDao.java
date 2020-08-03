@@ -28,7 +28,7 @@ public class PediatraDao extends Dao {
             RS.close();
             PSTM.close();
             
-            PSTM = CONNECTION.prepareStatement("CALL spLoginPediatra(?,?,?)");
+            PSTM = CONNECTION.prepareStatement("SELECT idpediatra, nombre, apellidos, jwt_control, fotografia, firma  FROM pediatra WHERE (email=? AND password=?) AND FCMToken=?");
             PSTM.setString(1, pediatra.getCorreo());
             PSTM.setString(2, pediatra.getPassword());
             PSTM.setString(3, pediatra.getFCMToken());
@@ -38,6 +38,8 @@ public class PediatraDao extends Dao {
                 pediatra.setNombre(RS.getString("nombre"));
                 pediatra.setApellidos(RS.getString("apellidos"));
                 pediatra.setJwtControl(RS.getString("jwt_control"));
+                pediatra.setImagen(RS.getString("fotografia"));
+                pediatra.setFirma("firma");
                 
                 pediatra.setPassword(null);
                 pediatra.setSalt(null);
@@ -92,8 +94,10 @@ public class PediatraDao extends Dao {
             RS = PSTM.executeQuery();
             if(RS.next()) {
                 pediatra.setId(RS.getInt("id"));
+                System.out.println("OK");
             } else {
                 setErrorMessage("Ocurrió un error, no se realizó el registro");
+                System.out.println("nada");
             }
         } catch(NullPointerException | SQLException e) {
             handleException(e);  
@@ -177,7 +181,7 @@ public class PediatraDao extends Dao {
         try {
             openConnection();
            
-            String query = "SELECT ped.idpediatra, ped.nombre, ped.apellidos, ped.cedula_profesional, ped.disponibilidad, ped.tarifa, ped.fotografia,\n" +
+            String query = "SELECT ped.email, ped.password, ped.idpediatra, ped.nombre, ped.apellidos, ped.cedula_profesional, ped.disponibilidad, ped.tarifa, ped.fotografia,\n" +
                             "esp.idespecialidad, esp.nombre AS especialidad, ub.idLugarAtencion, ub.latitud, ub.longitud, ub.direccion, t_ub.nombre AS tipo\n" +
                             "FROM pediatra ped\n" +
                             "JOIN especialidad esp ON ped.especialidad_id = esp.idespecialidad\n" +
@@ -212,7 +216,7 @@ public class PediatraDao extends Dao {
                 
                 pediatra.setEspecialidad(especialidad);
                 pediatra.setLugarAtencion(lugar);
-                
+                System.out.println(RS.getString("email") + " " + RS.getString("password"));
                 lista.add(pediatra);
             }
         } catch(NullPointerException | SQLException e) {
