@@ -45,6 +45,7 @@ public class PediatraService {
             PediatraDao dao = new PediatraDao();
             
             dao.insert(pediatra);
+            System.out.println("Nuevo: " + pediatra.getPassword());
             jres.setOK(dao.isSuccess());
             
             if(dao.isSuccess()) {

@@ -28,6 +28,7 @@ import com.mibebe.service.security.MySecurityContext;
 import com.mibebe.service.security.Secured;
 import com.mibebe.util.AppLog;
 import com.mibebe.util.Multimedia;
+import java.sql.SQLException;
 import javax.ws.rs.GET;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
@@ -169,7 +170,7 @@ public class Auth {
     
     @POST
     @Path("/pediatra/login") 
-    public Response loginPediatra(Pediatra pediatra) throws IOException {
+    public Response loginPediatra(Pediatra pediatra) throws IOException, SQLException {
         try {
             JSONResponse jres = new JSONResponse();
             PediatraDao dao = new PediatraDao();
